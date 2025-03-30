@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../Api";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Navbar = ({ isLoggedIn, username, setUsername }) => {
   const [isScrolled, setIsScrolled] = useState(false);

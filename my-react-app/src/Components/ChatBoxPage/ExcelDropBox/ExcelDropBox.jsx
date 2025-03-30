@@ -33,8 +33,8 @@ const ExcelDropBox = () => {
       title: "Do you want to clean your data?",
       html: `
         <div style="
-          max-height: 300px; overflow-y: auto; text-align: left; 
-          padding: 10px; border: 1px solid #ccc; border-radius: 8px; 
+          max-height: 350px; overflow-y: auto; text-align: left; 
+          padding: 4px; border: 1px solid #ccc; border-radius: 10px; 
           background-color: #f9f9f9;">
           ${cleaningSummary
             .split("\n\n")
@@ -53,7 +53,7 @@ const ExcelDropBox = () => {
       confirmButtonText: "Yes, Clean",
       cancelButtonText: "No, Keep it",
       reverseButtons: true,
-      width: "40vw",
+      width: "70vw",
       heightAuto: false,
       padding: "20px",
       customClass: {
@@ -114,47 +114,65 @@ const ExcelDropBox = () => {
         title: "No Preview Available",
         text: `No preview data found for ${fileName}.`,
         confirmButtonText: "OK",
+        customClass: {
+          popup: "rounded-xl",
+          confirmButton: "bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2",
+        },
       });
       return;
     }
+
+    // Calculate the number of columns
+    const columnCount = Object.keys(previewData[0]).length;
+
+    // Dynamic width calculation
+    const minWidthPerColumn = 12; // Minimum width per column in vw
+    let modalWidth = columnCount * minWidthPerColumn; // Adjust based on number of columns
+    modalWidth = Math.min(modalWidth, 80); // Ensure it doesn't exceed 80vw
+
     const tableHtml = `
-    <div style="max-height: 400px; overflow-y: auto;">
-      <table style="width: 100%; border-collapse: collapse; text-align: left;">
-        <thead>
-          <tr style="background-color: #007BFF; color: white;">
-            ${Object.keys(previewData[0])
+      <div style="max-height: 400px; max-width: ${modalWidth}vw; overflow-x: auto; overflow-y-scroll scrollbar-hide; border-radius: 12px; padding: 5px; background: #f8f9fa;">
+        <table style="width: max-content; border-collapse: collapse; text-align: left; font-family: Arial, sans-serif; font-size: 14px;">
+          <thead style="position: sticky; top: 0; background-color: #2563eb; color: white; z-index: 1;">
+            <tr>
+              ${Object.keys(previewData[0])
+                .map(
+                  (key) =>
+                    `<th style="padding: 12px; border: 1px solid #ddd; font-weight: bold; text-transform: capitalize; min-width: 150px; white-space: nowrap;">${key}</th>`
+                )
+                .join("")}
+            </tr>
+          </thead>
+          <tbody>
+            ${previewData
               .map(
-                (key) =>
-                  `<th style="padding: 8px; border: 1px solid #ddd;">${key}</th>`
+                (row, index) => `
+                  <tr style="background-color: ${
+                    index % 2 === 0 ? "#ffffff" : "#f3f4f6"
+                  }; transition: background 0.3s;">
+                    ${Object.values(row)
+                      .map(
+                        (value) =>
+                          `<td style="padding: 10px; border: 1px solid #ddd; min-width: 150px; white-space: nowrap;">${value}</td>`
+                      )
+                      .join("")}
+                  </tr>`
               )
               .join("")}
-          </tr>
-        </thead>
-        <tbody>
-          ${previewData
-            .map(
-              (row) => `
-                <tr>
-                  ${Object.values(row)
-                    .map(
-                      (value) =>
-                        `<td style="padding: 8px; border: 1px solid #ddd;">${value}</td>`
-                    )
-                    .join("")}
-                </tr>`
-            )
-            .join("")}
-        </tbody>
-      </table>
-    </div>
-  `;
+          </tbody>
+        </table>
+      </div>`;
+
     Swal.fire({
       title: `Preview of ${fileName}`,
       html: tableHtml,
-      width: "60vw",
+      width: `${modalWidth}vw`, // Dynamically set width
       confirmButtonText: "Close",
       customClass: {
-        popup: "rounded-lg shadow-lg",
+        popup: "rounded-xl shadow-2xl",
+        title: "text-xl font-bold text-blue-700",
+        confirmButton:
+          "bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2 transition-colors",
       },
     });
   };
@@ -260,7 +278,7 @@ const ExcelDropBox = () => {
       error: "text-red-500",
     };
     return (
-      <div className="flex items-center justify-center space-x-2 mt-4">
+      <div className="flex text-center items-center justify-center space-x-1 mt-3">
         <p className={`${textColor[uploadStatus]} text-lg font-semibold`}>
           {statusMessages[uploadStatus]}
         </p>
@@ -269,10 +287,10 @@ const ExcelDropBox = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4 py-8 bg-white rounded-2xl shadow-2xl">
+    <div className="w-full max-w-xl mx-auto px-4 py-2 h-[90vh] bg-white rounded-2xl shadow-2xl">
       <div
         onClick={handleBoxClick}
-        className="group w-full border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-500 transition-all duration-300 hover:bg-blue-50/50"
+        className="group w-full border-2 border-dashed border-gray-300 rounded-xl p-2 text-center cursor-pointer hover:border-blue-500 transition-all duration-300 hover:bg-blue-50/50"
       >
         <input
           type="file"
@@ -283,11 +301,11 @@ const ExcelDropBox = () => {
           accept=".csv,.xlsx"
         />
         <div className="flex flex-col items-center">
-          <FileSpreadsheet className="w-16 h-16 text-blue-500 group-hover:text-blue-600 transition-colors mb-4" />
-          <h2 className="text-xl font-semibold text-gray-800 mb-2 group-hover:text-blue-600">
+          <FileSpreadsheet className="w-12 h-12 text-blue-500 group-hover:text-blue-600 transition-colors mb-2" />
+          <h2 className="text-base font-semibold text-gray-800 mb-2 group-hover:text-blue-600">
             Drop your files here
           </h2>
-          <p className="text-sm text-gray-500 mb-4">
+          <p className="text-sm text-gray-500 mb-2">
             or <span className="text-blue-500 underline">browse</span> to upload
           </p>
           <div className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
@@ -298,25 +316,31 @@ const ExcelDropBox = () => {
 
       {renderUploadStatus()}
 
-      <div className="mt-4">
+      <div className="mt-1">
         <p className="text-sm text-gray-600 text-center items-center">
           {uploadedFiles?.length} file(s) uploaded
         </p>
-        <div className="mt-4 w-full max-w-lg mx-auto">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+        <div className="mt-2 w-full max-w-lg mx-auto text-center">
+          <h2
+            className="text-2xl font-semibold text-gray-900 mb-1"
+            style={{ fontSize: "clamp(12px, 2vw, 20px)" }}
+          >
             Uploaded Files
           </h2>
 
-          <div className="w-full shadow-md rounded-lg border p-3 flex flex-wrap gap-3 max-h-[20vh] overflow-y-auto scrollbar-thin bg-white scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+          <div className="w-full shadow-md rounded-lg border p-2 flex flex-wrap gap-3 max-h-[10vh] overflow-y-auto scrollbar-thin bg-white scrollbar-thumb-gray-400 scrollbar-track-gray-200">
             {uploadedFiles.length === 0 ? (
-              <p className="text-gray-800 text-lg font-semibold">
+              <p
+                className="text-gray-800 text-base font-semibold"
+                style={{ fontSize: "clamp(10px, 2vw, 14px)" }}
+              >
                 No files selected
               </p>
             ) : (
               uploadedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center bg-gray-200 px-3 py-2 rounded-lg border border-gray-400 shadow-sm"
+                  className="flex items-center bg-gray-200 px-2 py-1 rounded-lg border border-gray-400 shadow-sm"
                 >
                   <span className="text-gray-700 font-medium">{file}</span>
                   <button
@@ -330,7 +354,7 @@ const ExcelDropBox = () => {
             )}
           </div>
 
-          <div className="mt-5 w-[20vw]" ref={dropdownRef}>
+          <div className="mt-4 w-full" ref={dropdownRef}>
             <Dropdown
               options={uploadedFiles.map((file) => file)}
               defaultValue="Table Preview"
@@ -338,12 +362,15 @@ const ExcelDropBox = () => {
               onSelect={getPreviewByFileName}
             />
           </div>
-
+          {/* 
           <div className="mt-4">
-            <p className="text-gray-500 font-mono">
+            <p
+              className="text-gray-500 font-mono"
+              style={{ fontSize: "clamp(8px, 2vw, 10px)" }}
+            >
               Easily connect your data via a database or Excel sheet.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

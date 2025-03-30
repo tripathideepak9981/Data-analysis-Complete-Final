@@ -150,7 +150,7 @@ const Chart = ({ chartResponse, chartType }) => {
   const ChartComponent = { line: Line, bar: Bar, pie: Pie }[chartType] || Bar;
 
   return (
-    <div className="w-full flex justify-center items-center bg-white rounded-xl shadow-md p-6">
+    <div className="w-full flex justify-center items-center bg-white rounded-xl shadow-md p-3">
       {chartType === "pie" ? (
         <div className="flex flex-col md:flex-row w-full gap-10 items-start justify-center">
           <div className="w-full md:w-1/2 h-[400px] flex justify-center items-center">
@@ -183,11 +183,11 @@ const Chart = ({ chartResponse, chartType }) => {
             />
           </div>
 
-          <div className="w-full md:w-1/2 max-h-[400px] overflow-y-auto px-4 border-l border-gray-200">
-            <h3 className="text-lg font-semibold text-slate-800 mb-4">
+          <div className="w-full md:w-1/2 max-h-[400px] overflow-y-auto px-3 border-l border-gray-200">
+            <h3 className="text-lg font-semibold text-slate-800 mb-3">
               Labels
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {chartData.labels.map((label, idx) => (
                 <li key={idx} className="flex items-center gap-3">
                   <span
@@ -210,7 +210,7 @@ const Chart = ({ chartResponse, chartType }) => {
               height: "400px",
             }}
           >
-            {chartData.labels.length  && (
+            {chartData.labels.length && (
               <ChartComponent
                 key={chartType}
                 data={chartData}

@@ -31,20 +31,20 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
   }, [isOpen]);
 
   return (
-    <div 
+    <div
       className="
         relative 
         w-full 
         max-w-md 
         mx-auto
-      " 
+      "
       ref={dropdownRef}
     >
       {/* Input Field with Search Icon and Dropdown Toggle */}
-      <div 
+      <div
         className="
           flex 
-          items-center 
+          items-center
           border 
           border-gray-300 
           bg-white 
@@ -54,29 +54,28 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
           transition-all 
           duration-300 
           ease-in-out
-          p-2 
           sm:p-3 
           group
         "
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <Search 
+        <Search
           className="
             text-gray-500 
-            mr-2 
-            w-5 
-            h-5 
+            mr-2
+            w-3
+            h-3
             sm:w-6 
             sm:h-6 
             group-hover:text-blue-500 
             transition-colors
-          " 
+          "
         />
-        
+
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search or select a table..."
+          placeholder="Search table..."
           className="
             w-full 
             outline-none 
@@ -96,12 +95,12 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
           onFocus={() => setIsOpen(true)}
           onClick={(e) => e.stopPropagation()}
         />
-        
+
         <ChevronDown
           className={`
             text-gray-500 
-            w-5 
-            h-5 
+            w-3 
+            h-3 
             sm:w-6 
             sm:h-6 
             transition-transform 
@@ -114,7 +113,7 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
 
       {/* Dropdown Options */}
       {isOpen && (
-        <div 
+        <div
           className="
             absolute 
             w-full 
@@ -124,10 +123,9 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
             border-gray-300 
             rounded-xl 
             shadow-lg 
-            max-h-60 
+            max-h-50 
             overflow-y-scroll
             oveerflow-x-hidden
-            scrollbar-hide
             z-50 
             animate-fadeIn
             scrollbar-hide
@@ -156,7 +154,7 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
                 "
                 onClick={() => handleTableSelection(table)}
               >
-                <span 
+                <span
                   className="
                     text-sm 
                     sm:text-base 
@@ -170,9 +168,9 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
                 >
                   {table}
                 </span>
-                
+
                 {selectedTable.includes(table) && (
-                  <Check 
+                  <Check
                     className="
                       w-5 
                       h-5 
@@ -180,13 +178,13 @@ const TableDropdown = ({ DbResponse, selectedTable, handleTableSelection }) => {
                       opacity-0 
                       group-hover:opacity-100 
                       transition-opacity
-                    " 
+                    "
                   />
                 )}
               </div>
             ))
           ) : (
-            <p 
+            <p
               className="
                 p-2 
                 sm:p-3 

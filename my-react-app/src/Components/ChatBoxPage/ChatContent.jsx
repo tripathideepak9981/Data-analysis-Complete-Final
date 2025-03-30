@@ -4,8 +4,6 @@ import Typed from "typed.js";
 import ResponseCard from "./ResponseCard";
 import Chart from "./Charts/Chart";
 import { chartGenerator } from "../../Api";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
 
 const ChatContent = ({
   chartResponse,
@@ -29,6 +27,8 @@ const ChatContent = ({
       );
       setChartResponse(chartData);
     } catch (error) {
+      setChartResponse("error");
+      console.log(chartType);
       console.error("Error fetching chart data:", error);
     }
   };
@@ -46,8 +46,7 @@ const ChatContent = ({
       strings: ["Welcome to Data Analysis AI,  Let's start analysis!"],
       typeSpeed: 40,
       backDelay: 1000,
-      showCursor: true,
-      cursorChar: "_",
+      showCursor: false,
     });
 
     return () => typed.destroy();
@@ -60,6 +59,7 @@ const ChatContent = ({
       ],
       typeSpeed: 50,
       showCursor: false,
+      fontSize: "clamp(12px, 1.5vw, 18px)",
     });
 
     return () => typedAI.destroy();
@@ -68,18 +68,18 @@ const ChatContent = ({
   return (
     <div
       className={`
-        p-5
+        p-2
         w-full 
-        max-w-6xl 
-        mx-auto 
+        max-w-4xl 
         sm:px-6 
-        lg:px-8 
+        lg:px-2
         bg-white
         border-rounded
         min-h-screen 
+        mx-auto
         flex 
         flex-col
-        ${isSliderVisible ? "lg:max-w-[1400px]" : ""}
+        ${isSliderVisible ? "lg:max-w-[1400px]" : "lg:max-w-[1400px]"}
       `}
     >
       {/* Header Section */}
@@ -90,21 +90,24 @@ const ChatContent = ({
           items-center 
           text-center 
           w-full 
-          mb-8 
+          mb-4
           animate-fadeIn
         "
+        style={{ fontSize: "clamp(14px, 2vw, 22px)" }}
       >
         <div
           className="
             bg-purple-100 
-            p-4 
+            p-3
+            py-2
             rounded-full 
-            mb-4 
+            mb-3
             shadow-md 
             animate-pulse-slow
           "
+          style={{ fontSize: "clamp(14px, 2vw, 24px)" }}
         >
-          <Bot size={48} className="text-purple-600" />
+          <Bot size={40} className="text-purple-600  clamp(14px, 2vw, 26px)" />
         </div>
 
         <h1
@@ -113,14 +116,15 @@ const ChatContent = ({
             md:text-4xl 
             font-bold 
             text-gray-900 
-            mb-4 
+            mb-1
             flex 
             items-center 
             gap-2
           "
+          style={{ fontSize: "clamp(14px, 2vw, 22px)" }}
         >
           Connect Data with AI
-          <Sparkles className="text-purple-500 animate-spin-slow" size={32} />
+          <Sparkles className="text-purple-500 animate-spin-slow" size={28} />
         </h1>
 
         <p
@@ -129,8 +133,9 @@ const ChatContent = ({
             text-gray-600 
             max-w-2xl 
             mx-auto 
-            mb-6
+            mb-4
           "
+          style={{ fontSize: "clamp(4px, 2vw, 16px)" }}
         >
           Transform your data insights with intelligent AI-powered analysis.
         </p>
@@ -140,13 +145,13 @@ const ChatContent = ({
             bg-gradient-to-r 
             from-purple-50 
             to-blue-50 
-            p-4 
             rounded-xl 
             shadow-lg 
             w-full 
-            max-w-xl 
-            mx-auto
+            max-w-lg
+          
           "
+          style={{ fontSize: "clamp(14px, 2vw, 25px)" }}
         >
           <span
             className="
@@ -156,6 +161,7 @@ const ChatContent = ({
               block 
               truncate
             "
+            style={{ fontSize: "clamp(10px, 2vw, 18px)" }}
             ref={typedElement}
           ></span>
         </div>
@@ -165,27 +171,35 @@ const ChatContent = ({
       <div
         ref={chatContainerRef}
         className="
-           flex-grow
+           flex-wrap
           bg-gray-50 
           rounded-xl 
           shadow-inner 
-          p-4 
+          p-4
+          mt-2
           sm:p-6 
           space-y-6 
           overflow-y-auto
         "
       >
-        <div className="flex flex-col justify-start mt-5">
-          <div className="flex flex-col max-w-6xl space-y-6">
-            <div className="flex items-center space-x-4">
-              <SmartToyIcon className="text-4xl text-green-600" />
-              <span className="text-3xl font-bold text-gray-900">
+        <div className="flex flex-col justify-start">
+          <div className="flex flex-col max-w-6xl">
+            <div className="flex items-center space-x-3 ">
+              <Bot className="text-4xl text-green-600" />
+              <span
+                className="text-3xl font-bold text-gray-900"
+                style={{ fontSize: "clamp(10px, 2vw, 16px)" }}
+              >
                 AI Response :{" "}
               </span>
             </div>
-            <div className="bg-white p-4 rounded-xl shadow border border-gray-300 space-y-4 max-w-3xl">
+            <div
+              className="mt-2 bg-white py-1 px-3 rounded-xl shadow border border-gray-300 space-y-2 max-w-[40vw]"
+              style={{ fontSize: "clamp(14px, 2vw, 24px)" }}
+            >
               <h2
                 className="text-2xl font-semibold text-blue-700"
+                style={{ fontSize: "clamp(10px, 2vw, 16px)" }}
                 ref={aiResponseRef}
               ></h2>
             </div>
@@ -195,11 +209,13 @@ const ChatContent = ({
         {/* Chat Messages */}
         <div
           className="
-            space-y-5 
+            space-y-4 
             w-full 
-            max-w-5xl 
+
+            max-w-6xl 
             mx-auto
           "
+          style={{ fontSize: "clamp(10px, 2vw, 20px)" }}
         >
           {chatMessages &&
             chatMessages.map((chat, index) => (
@@ -208,8 +224,8 @@ const ChatContent = ({
                 className="
                 transition-all 
                 duration-300 
-                hover:scale-[1.01]
               "
+                style={{ fontSize: "clamp(10px, 2vw, 16px)" }}
               >
                 <ResponseCard response={chat} />
               </div>
@@ -226,7 +242,7 @@ const ChatContent = ({
               bg-white 
               rounded-xl 
               shadow-lg 
-              p-4 
+              p-3
               sm:p-6 
               animate-fadeIn
             "
@@ -236,7 +252,7 @@ const ChatContent = ({
                 flex 
                 items-center 
                 justify-between 
-                mb-4
+                mb-2
               "
             >
               <h2
@@ -248,12 +264,13 @@ const ChatContent = ({
                   items-center 
                   gap-2
                 "
+                style={{ fontSize: "clamp(14px, 2vw, 22px)" }}
               >
                 <RefreshCw
                   className="text-purple-500 animate-spin-slow"
                   size={20}
                 />
-                Data Visualization
+                {chatMessages[chatMessages.length - 1].userQuery}
               </h2>
             </div>
             <Chart

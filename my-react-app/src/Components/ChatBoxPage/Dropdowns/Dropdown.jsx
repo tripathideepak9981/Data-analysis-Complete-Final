@@ -31,41 +31,40 @@ const Dropdown = ({ options, label, onSelect, defaultValue }) => {
   }, []);
 
   return (
-    <div 
-    className="
-      relative 
+    <div
+      className="
+       relative
       w-full 
       max-w-md 
       mx-auto
-    " 
-    ref={dropdownRef}
-  >
-    {label && (
-      <label 
-        className="
+    "
+      ref={dropdownRef}
+    >
+      {label && (
+        <label
+          className="
           text-xl 
-          sm:text-2xl 
+          sm:text-xl 
           font-medium 
-          text-black
-          
+          text-gray-900
           block
           text-center
-
+          mb-2
         "
-      >
-        {label}
-      </label>
-    )}
-    
-    {/* Dropdown Trigger */}
-    <div 
-      className="
+          style={{ fontSize: "clamp(10px, 2vw, 20px)" }}
+        >
+          {label}
+        </label>
+      )}
+
+      {/* Dropdown Trigger */}
+      <div
+        className="
         bg-white 
         border 
         border-gray-300 
         rounded-lg 
         shadow-md 
-        p-2 
         sm:p-3 
         flex 
         justify-between 
@@ -79,40 +78,40 @@ const Dropdown = ({ options, label, onSelect, defaultValue }) => {
         px-3 
         sm:px-4
       "
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <span 
-        className="
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span
+          className="
           truncate 
           text-sm 
           sm:text-base 
-          max-w-[80%]
+          max-w-[100%]
         "
-      >
-        {selected}
-      </span>
-      
-      <span 
-        className={`
+        >
+          {selected}
+        </span>
+
+        <span
+          className={`
           transition-transform 
           duration-300 
           ${isOpen ? "rotate-180" : ""}
         `}
-      >
-        <ArrowDropDownIcon 
-          className="
+        >
+          <ArrowDropDownIcon
+            className="
             text-gray-600 
             text-base 
             sm:text-lg
-          " 
-        />
-      </span>
-    </div>
-    
-    {/* Dropdown Options */}
-    {isOpen && (
-      <ul 
-        className="
+          "
+          />
+        </span>
+      </div>
+
+      {/* Dropdown Options */}
+      {isOpen && (
+        <ul
+          className="
           absolute 
           z-50 
           left-0 
@@ -131,11 +130,11 @@ const Dropdown = ({ options, label, onSelect, defaultValue }) => {
           duration-300
           overflow-y-scroll scrollbar-hide
         "
-      >
-        {options.map((option, index) => (
-          <li
-            key={index}
-            className="
+        >
+          {options.map((option, index) => (
+            <li
+              key={index}
+              className="
               px-3 
               sm:px-4 
               py-2 
@@ -149,15 +148,16 @@ const Dropdown = ({ options, label, onSelect, defaultValue }) => {
               text-sm 
               sm:text-base
             "
-            onClick={() => handleSelect(option)}
-          >
-            {option}
-          </li>
-        ))}
-      </ul>
-    )}
-  </div>
-);
+              onClick={() => handleSelect(option)}
+              style={{ fontSize: "clamp(10px, 2vw, 16px)" }}
+            >
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
 
 export default Dropdown;

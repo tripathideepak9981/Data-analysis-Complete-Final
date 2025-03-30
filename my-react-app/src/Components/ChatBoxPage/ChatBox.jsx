@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import ExcelDropBox from "./ExcelDropBox/ExcelDropBox";
 
-import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
-
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -15,9 +13,7 @@ import PopupForm from "./PopupForm/PopupForm";
 
 import Dropdown from "./Dropdowns/Dropdown";
 
-import { chartGenerator, exceuteQuery, loadTablesApi } from "../../Api";
-
-import Swal from "sweetalert2";
+import { exceuteQuery } from "../../Api";
 
 import { Menu, MenuItem, Button } from "@mui/material";
 
@@ -29,10 +25,7 @@ import InsightsIcon from "@mui/icons-material/Insights";
 
 import BarChartIcon from "@mui/icons-material/BarChart";
 
-import ClearIcon from "@mui/icons-material/Clear";
 import DbSlider from "./DbSlider/DbSlider";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const ChatBox = () => {
   const [query, setQuery] = useState("");
@@ -139,28 +132,31 @@ const ChatBox = () => {
       className=" bg-gradient-to-br from-[#240046] to-[#3b0764]  
      text-gray-900 min-h-screen w-full fixed overflow-hidden "
     >
-      <div className="flex flex-col md:flex-row h-full md:h-[98vh] w-full rounded-lg item-streched">
+      <div className="flex flex-col md:flex-row h-full md:h-[100vh] w-full rounded-lg item-streched">
         {/* Slider Section - Responsive Width and Behavior */}
         {isSliderVisible && (
           <div
             id="slider"
-            className="w-full md:w-[40%] lg:w-[30%] xl:w-[26%] 
-          max-h-[50vh] md:max-h-[98vh] 
+            className="w-full md:w-[40%] lg:w-[35%] xl:w-[35%] 
+          max-h-[40vh] md:max-h-[98vh] 
           overflow-y-scroll
           scrollbar-hide
-          px-4 md:px-6 
-          py-4 md:py-0 
+          px-2 md:px-3 
+          py-0 md:py-0 
           bg-gradient-to-br from-[#240046] to-[#3b0764] 
-          md:mt-8 
+          md:mt-2 
           transition-all 
           duration-300"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-200 mb-4 ml-2 md:ml-6 flex items-center text-center">
+            <h2
+              className="mt-1 font-bold text-slate-200  ml-2 md:ml-3 flex  text-center items-stretch"
+              style={{ fontSize: "clamp(14px, 2vw, 25px)" }}
+            >
               Start Analysing Data
             </h2>
 
             {/* Data Source Dropdown */}
-            <div className="my-3 mb-6 w-full max-w-md">
+            <div className="my-2 mb-4 w-full max-w-md">
               <DataSourceDropDown onSelect={setSelectedDataSource} />
             </div>
 
@@ -240,9 +236,13 @@ const ChatBox = () => {
         <div
           id="chatbox"
           className={`flex flex-col justify-between 
-        w-full 
-        ${isSliderVisible ? "md:w-[60%] lg:w-[70%] xl:w-[74%]" : "md:w-full"} 
-        transition-all duration-300`}
+            w-full 
+        ${
+          isSliderVisible
+            ? "flex flex-col w-full max-w-8xl mx-auto py-2 mt-2 md:py-3 px-2 md:px-3 bg-white shadow-lg rounded-2xl border"
+            : " flex flex-col w-full max-w-8xl mx-auto py-2 mt-2 md:py-3 px-2 md:px-3 bg-white shadow-lg rounded-2xl border"
+        } 
+        transition-all duration-300 style={{ fontSize: moderateScale(16) }}`}
         >
           {/* Chat Content - Responsive Scrolling and Padding */}
           <div className="flex-1 overflow-y-scroll scrollbar-hide  rounded-lg  relative">
@@ -285,83 +285,102 @@ const ChatBox = () => {
           </div>
 
           {/* Message Input Section - Responsive Layout */}
-          <div className="mt-2 md:mt-3 w-full max-w-6xl mx-auto bg-gray-50 shadow-lg rounded-2xl border py-2 md:py-4">
-            <div className="flex flex-col w-full max-w-5xl mx-auto py-2 md:py-3 px-2 md:px-3 bg-gray-50">
-              <div className="flex items-center space-x-2 md:space-x-5 w-full">
-                {/* Chart Type Dropdown */}
-                <div className="relative">
-                  <Button
-                    onClick={openDropdown}
-                    className="bg-gray-200 text-gray-700 rounded-lg transition-all duration-300"
-                  >
-                    <AssessmentIcon
-                      className="w-10 h-10 md:w-16 md:h-16"
-                      style={{ width: "50px", height: "50px" }}
-                    />
-                  </Button>
-                  <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={closeDropdown}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                    transformOrigin={{ vertical: "top", horizontal: "left" }}
-                  >
-                    <MenuItem
-                      onClick={() => {
+          <div
+            className="flex flex-col w-full max-w-8xl mx-auto py-2 mt-2 md:py-3 px-2 md:px-3 bg-gray-50 shadow-lg 
+            rounded-2xl border"
+          >
+            <div className="flex items-center space-x-2 md:space-x-5 w-full">
+              {/* Chart Type Dropdown */}
+              <div className="relative">
+                <Button
+                  onClick={openDropdown}
+                  className="bg-gray-200 text-gray-700 rounded-lg transition-all duration-300"
+                >
+                  <AssessmentIcon
+                    className="w-10 h-10 md:w-16 md:h-16"
+                    style={{ width: "50px", height: "50px" }}
+                  />
+                </Button>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={closeDropdown}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                  transformOrigin={{ vertical: "top", horizontal: "left" }}
+                >
+                  <MenuItem
+                    disabled={
+                      chartResponse === "error" || chartResponse === null
+                    }
+                    onClick={() => {
+                      if (chartResponse !== "error") {
                         setChartType("bar");
                         closeDropdown();
-                      }}
-                    >
-                      <BarChartIcon className="text-blue-500 mr-2" /> Bar Chart
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
+                      }
+                    }}
+                  >
+                    <BarChartIcon className="text-blue-500 mr-2" /> Bar Chart
+                  </MenuItem>
+                  <MenuItem
+                    disabled={
+                      chartResponse === "error" || chartResponse === null
+                    }
+                    onClick={() => {
+                      if (chartResponse !== "error") {
                         setChartType("line");
                         closeDropdown();
-                      }}
-                    >
-                      <InsightsIcon className="text-green-500 mr-2" /> Line
-                      Chart
-                    </MenuItem>
-                    {chartResponse && chartResponse?.multi_value === false && (
-                      <MenuItem
-                        onClick={() => {
-                          setChartType("pie");
-                          closeDropdown();
-                        }}
-                      >
-                        <PieChartIcon className="text-red-500 mr-2" /> Pie Chart
-                      </MenuItem>
-                    )}
-                  </Menu>
-                </div>
-
-                {/* Message Input */}
-                <TextareaAutosize
-                  minRows={1}
-                  maxRows={4}
-                  placeholder="Add data or ask any question!"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      sendMessage();
+                      }
+                    }}
+                  >
+                    <InsightsIcon className="text-green-500 mr-2" /> Line Chart
+                  </MenuItem>
+                  <MenuItem
+                    disabled={
+                      chartResponse === "error" ||
+                      chartResponse?.multi_value === true ||
+                      chartResponse === null
                     }
-                  }}
-                  className="flex-1 bg-gray-50 text-gray-800 
+                    onClick={() => {
+                      if (
+                        chartResponse !== "error" &&
+                        chartResponse?.multi_value !== true
+                      ) {
+                        setChartType("pie");
+                        closeDropdown();
+                      }
+                    }}
+                  >
+                    <PieChartIcon className="text-pink-500 mr-2" /> Pie Chart
+                  </MenuItem>
+                </Menu>
+              </div>
+
+              {/* Message Input */}
+              <TextareaAutosize
+                minRows={1}
+                maxRows={4}
+                placeholder="Add data or ask any question!"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }}
+                className="flex-1 bg-gray-50 text-gray-800 
                 px-2 md:px-4 py-2 md:py-3 
                 rounded-lg border border-gray-300 
                 focus:ring-2 focus:ring-blue-500 
                 focus:border-blue-500 focus:outline-none 
                 placeholder-gray-500 shadow-sm 
                 resize-none transition-all duration-200"
-                />
+              />
 
-                {/* Send Button */}
-                <button
-                  onClick={sendMessage}
-                  className="text-purple
+              {/* Send Button */}
+              <button
+                onClick={sendMessage}
+                className="text-purple
         rounded-full 
         flex items-center justify-center 
         transition-all duration-300 
@@ -372,13 +391,12 @@ const ChatBox = () => {
         active:scale-95 
         focus:outline-blue focus:ring-2 focus:ring-blue-400 
         w-10 h-10 md:w-auto md:min-w-[80px]"
-                >
-                  <ArrowUpwardIcon
-                    className="w-24 h-24 md:w-10 md:h-10"
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                </button>
-              </div>
+              >
+                <ArrowUpwardIcon
+                  className="w-24 h-24 md:w-10 md:h-10"
+                  style={{ width: "40px", height: "40px" }}
+                />
+              </button>
             </div>
           </div>
         </div>

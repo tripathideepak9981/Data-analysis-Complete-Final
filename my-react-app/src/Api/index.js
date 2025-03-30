@@ -51,27 +51,6 @@ export const uploadFilesAPI = async (selectedFiles) => {
   }
 };
 
-// export const exceuteQuery = async (query) => {
-  
-//   try {
-//     console.log("Query : " + query)
-//     const response = await axios.post(`${API_BASE_URL}/api/execute_query/`, { "query": query }, 
-//       {
-//         withCredentials: true,
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("access_token")}`
-//         }
-//       }
-//       ,axiosConfig);
-//     console.log("Query executed successfully:", response.data);
-//     return response.data;
-//   }catch (error) {
-//     console.error("Error executing query:", error);
-//     return handleError(error, "excute query");
-//   }
-
-// }
-
 export const exceuteQuery = async (query) => {
   try {
     const token = localStorage.getItem("access_token");
