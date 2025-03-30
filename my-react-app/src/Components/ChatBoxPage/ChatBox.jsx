@@ -376,26 +376,22 @@ const ChatBox = () => {
                 placeholder-gray-500 shadow-sm 
                 resize-none transition-all duration-200"
               />
-
-              {/* Send Button */}
               <button
                 onClick={sendMessage}
-                className="text-purple
-        rounded-full 
-        flex items-center justify-center 
-        transition-all duration-300 
-        transform hover:scale-110 
-        shadow-md 
-        p-3 md:px-4 md:py-2 
-        text-sm font-semibold 
-        active:scale-95 
-        focus:outline-blue focus:ring-2 focus:ring-blue-400 
-        w-10 h-10 md:w-auto md:min-w-[80px]"
+                className="
+    w-8 h-8 md:w-12 md:h-12
+    rounded-full 
+    flex items-center justify-center 
+    bg-gray-200
+    text-black
+    shadow-inner
+    transition-transform duration-300 ease-in-out 
+    hover:scale-110 hover:shadow-xl 
+    active:scale-95 
+    focus:outline-none focus:ring-2 focus:ring-blue-300
+  "
               >
-                <ArrowUpwardIcon
-                  className="w-24 h-24 md:w-10 md:h-10"
-                  style={{ width: "40px", height: "40px" }}
-                />
+                <ArrowUpwardIcon className="w-6 h-6 md:w-8 md:h-8" />
               </button>
             </div>
           </div>

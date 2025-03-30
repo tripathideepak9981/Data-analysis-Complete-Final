@@ -1,3 +1,4 @@
+import { keyframes } from 'framer-motion';
 import scrollbarHide from 'tailwind-scrollbar-hide';
 module.exports = {
   content: [
@@ -5,6 +6,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'bounce-slow': 'bounceSlow 1s infinite ease-in-out'
+      },
+      keyframes:{
+        bounceSlow: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-0.5rem)' },
+        },
+      },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'], // Add Poppins font
       },
@@ -19,6 +29,6 @@ module.exports = {
     },
   },
   plugins: [
-    scrollbarHide// You'd need to install this plugin
+    scrollbarHide
   ]
 };

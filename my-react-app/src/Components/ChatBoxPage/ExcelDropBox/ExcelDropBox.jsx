@@ -287,10 +287,10 @@ const ExcelDropBox = () => {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4 py-2 h-[90vh] bg-white rounded-2xl shadow-2xl">
+    <div className="w-full max-w-xl mx-auto px-4 py-4 h-[90vh] bg-white rounded-2xl shadow-2xl">
       <div
         onClick={handleBoxClick}
-        className="group w-full border-2 border-dashed border-gray-300 rounded-xl p-2 text-center cursor-pointer hover:border-blue-500 transition-all duration-300 hover:bg-blue-50/50"
+        className="group w-full border-2 border-dashed border-gray-300 rounded-xl p-2 text-center cursor-pointer my-5 hover:border-blue-500 transition-all duration-300 hover:bg-blue-50/50"
       >
         <input
           type="file"
@@ -316,11 +316,11 @@ const ExcelDropBox = () => {
 
       {renderUploadStatus()}
 
-      <div className="mt-1">
+      <div className="">
         <p className="text-sm text-gray-600 text-center items-center">
           {uploadedFiles?.length} file(s) uploaded
         </p>
-        <div className="mt-2 w-full max-w-lg mx-auto text-center">
+        <div className="mt-5 w-full max-w-lg mx-auto text-center">
           <h2
             className="text-2xl font-semibold text-gray-900 mb-1"
             style={{ fontSize: "clamp(12px, 2vw, 20px)" }}
@@ -328,7 +328,7 @@ const ExcelDropBox = () => {
             Uploaded Files
           </h2>
 
-          <div className="w-full shadow-md rounded-lg border p-2 flex flex-wrap gap-3 max-h-[10vh] overflow-y-auto scrollbar-thin bg-white scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+          <div className="w-full shadow-md rounded-lg border p-2 flex flex-wrap gap-3 max-h-[20vh] overflow-y-auto scrollbar-thin bg-white scrollbar-thumb-gray-400 scrollbar-track-gray-200">
             {uploadedFiles.length === 0 ? (
               <p
                 className="text-gray-800 text-base font-semibold"
@@ -354,7 +354,7 @@ const ExcelDropBox = () => {
             )}
           </div>
 
-          <div className="mt-4 w-full" ref={dropdownRef}>
+          <div className="mt-5 w-full" ref={dropdownRef}>
             <Dropdown
               options={uploadedFiles.map((file) => file)}
               defaultValue="Table Preview"
@@ -362,15 +362,6 @@ const ExcelDropBox = () => {
               onSelect={getPreviewByFileName}
             />
           </div>
-          {/* 
-          <div className="mt-4">
-            <p
-              className="text-gray-500 font-mono"
-              style={{ fontSize: "clamp(8px, 2vw, 10px)" }}
-            >
-              Easily connect your data via a database or Excel sheet.
-            </p>
-          </div> */}
         </div>
       </div>
     </div>
